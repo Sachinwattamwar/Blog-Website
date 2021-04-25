@@ -24,10 +24,9 @@ app.get('/' , (Req , res)=>{
     res.render('home');
 });
 
-app.get('/makeblog',async(req , res)=>{
-    // const blog = new Campground({title : 'My city' , description : 'its a good city'});
-    // await blog.save();
-    res.send("blog"); 
+app.get('/blogs', async(req , res)=>{
+    const campgrounds = await Campground.find({});
+    res.render('campgrounds/index' , {campgrounds});
 })
 
 app.listen(3000 , ()=>{
