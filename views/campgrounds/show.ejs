@@ -9,6 +9,12 @@
 <body>
     <h1><%=campground.title%>  blog</h1>
     <h2><%= campground.location %> </h2>
+    <p>
+        <form action="/blogs/<%=campground._id%>?_method=DELETE" method="POST">
+            <button>Delete blog</button>
+        </form>
+        
+    </p>
     <footer>
         <a href="/blogs/<%=campground._id%>/edit">Edit BLog</a>
         <a href="/blogs">To go to all blogs</a>

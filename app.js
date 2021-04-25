@@ -62,6 +62,12 @@ app.put('/blogs/:id',async (req , res)=>{
     const {id} = req.params;
     const campground = await Campground.findByIdAndUpdate(id , {...req.body.campground} );
     res.redirect(`/blogs/${campground._id}`);
+});
+
+app.delete('/blogs/:id', async (req , res)=>{
+    const {id} = req.params;
+    await Campground.findByIdAndDelete(id);
+    res.redirect('/blogs')
 })
 
 app.listen(3000 , ()=>{
