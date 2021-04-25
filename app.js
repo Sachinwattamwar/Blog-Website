@@ -3,6 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
 const { findById } = require('./models/campground');
+const methodOverride = require('method-override');
 
 mongoose.connect('mongodb://localhost:27017/blog-website', {
     useNewUrlParser: true,
@@ -21,6 +22,7 @@ app.set('view engine' , 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({extended : true}));
+app.use(methodOverride('_method'));
 
 
 app.get('/' , (Req , res)=>{
@@ -42,13 +44,25 @@ app.post('/blogs' , async(req , res)=>{
     res.redirect(`/blogs/${campground._id}`);
 })
 
+
+
 app.get('/blogs/:id', async(req , res)=>{
     const {id} = req.params;
-    const blog = await Campground.findById(id);
-    res.render('campgrounds/show', {blog});
+    const campground = await Campground.findById(id);
+    res.render('campgrounds/show', {campground});
 })
 
+app.get('/blogs/:id/edit', async(req , res)=>{
+    const {id} = req.params;
+    const campground = await Campground.findById(id);
+    res.render('campgrounds/edit', {campground});
+});
 
+app.put('/blogs/:id',async (req , res)=>{
+    const {id} = req.params;
+    const campground = await Campground.findByIdAndUpdate(id , {...req.body.campground} );
+    res.redirect(`/blogs/${campground._id}`);
+})
 
 app.listen(3000 , ()=>{
     console.log('port working');

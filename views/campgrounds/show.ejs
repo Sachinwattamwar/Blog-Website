@@ -7,9 +7,10 @@
     <title>showing blog</title>
 </head>
 <body>
-    <h1><%=blog.title%>  blog</h1>
-    <h2><%= blog.location %> </h2>
+    <h1><%=campground.title%>  blog</h1>
+    <h2><%= campground.location %> </h2>
     <footer>
+        <a href="/blogs/<%=campground._id%>/edit">Edit BLog</a>
         <a href="/blogs">To go to all blogs</a>
     </footer>
 </body>
