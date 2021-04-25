@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
+const { findById } = require('./models/campground');
 
 mongoose.connect('mongodb://localhost:27017/blog-website', {
     useNewUrlParser: true,
@@ -27,6 +28,12 @@ app.get('/' , (Req , res)=>{
 app.get('/blogs', async(req , res)=>{
     const campgrounds = await Campground.find({});
     res.render('campgrounds/index' , {campgrounds});
+})
+
+app.get('/blogs/:id', async(req , res)=>{
+    const {id} = req.params;
+    const blog = await Campground.findById(id);
+    res.render('campgrounds/show', {blog});
 })
 
 app.listen(3000 , ()=>{

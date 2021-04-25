@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blogs</title>
+    <title>showing blog</title>
 </head>
 <body>
-    <h1>all campgrounds</h1>
-    <ul>
-        <%for(let campground of campgrounds){%> 
-            <li><a href="/blogs/<%=campground._id%>"><%= campground.title %></a></li>
-        <%}%> 
-    </ul>
+    <h1><%=blog.title%>  blog</h1>
+    <h2><%= blog.location %> </h2>
+
 </body>
 </html>
