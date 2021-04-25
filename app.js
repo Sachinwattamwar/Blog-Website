@@ -20,6 +20,8 @@ const app = express();
 app.set('view engine' , 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(express.urlencoded({extended : true}));
+
 
 app.get('/' , (Req , res)=>{
     res.render('home');
@@ -28,6 +30,16 @@ app.get('/' , (Req , res)=>{
 app.get('/blogs', async(req , res)=>{
     const campgrounds = await Campground.find({});
     res.render('campgrounds/index' , {campgrounds});
+});
+
+app.get('/blogs/new' , (req , res)=>{
+    res.render('campgrounds/new');
+});
+
+app.post('/blogs' , async(req , res)=>{
+    const campground = new Campground(req.body.campground);
+    await campground.save();
+    res.redirect(`/blogs/${campground._id}`);
 })
 
 app.get('/blogs/:id', async(req , res)=>{
@@ -36,6 +48,8 @@ app.get('/blogs/:id', async(req , res)=>{
     res.render('campgrounds/show', {blog});
 })
 
+
+
 app.listen(3000 , ()=>{
     console.log('port working');
-})
+});

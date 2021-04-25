@@ -8,6 +8,9 @@
 </head>
 <body>
     <h1>all campgrounds</h1>
+    <div>
+        <a href="/blogs/new">To add a new blog</a>
+    </div>
     <ul>
         <%for(let campground of campgrounds){%> 
             <li><a href="/blogs/<%=campground._id%>"><%= campground.title %></a></li>
