@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
@@ -15,6 +14,7 @@ db.once("open",()=>{
     console.log("databse connected")
 });
 
+const app = express();
 
 app.set('view engine' , 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -25,9 +25,9 @@ app.get('/' , (Req , res)=>{
 });
 
 app.get('/makeblog',async(req , res)=>{
-    const blog = new Campground({title : 'My city' , description : 'its a good city'});
-    await blog.save();
-    res.send(blog); 
+    // const blog = new Campground({title : 'My city' , description : 'its a good city'});
+    // await blog.save();
+    res.send("blog"); 
 })
 
 app.listen(3000 , ()=>{
