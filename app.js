@@ -3,7 +3,9 @@ const path = require('path');
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
 const ejsMate = require('ejs-mate');
+const Joi = require('joi');
 const catchAsync = require('./utils/catchAsync');
+const {campgroundSchema} = require('./schemas.js');
 const ExpressError = require('./utils/ExpressError');
 const { findById } = require('./models/campground');
 const methodOverride = require('method-override');
@@ -28,6 +30,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({extended : true}));
 app.use(methodOverride('_method'));
 
+const validateCampground = (req , res , next)=>{
+    const {error} = campgroundSchema.validate(req.body);
+    if(error)
+    {
+        const msg = error.details.map(el=>el.message).join(',')
+        throw new ExpressError(msg , 400);
+    }
+    else 
+    {
+        next()
+    }
+}
+
 
 app.get('/' , (Req , res)=>{
     res.render('home');
@@ -42,8 +57,8 @@ app.get('/blogs/new' , (req , res)=>{
     res.render('campgrounds/new');
 });
 
-app.post('/blogs' , catchAsync(async(req , res , next)=>{
-    if(!req.body.campground) throw new ExpressError('Invalid blog data' , 400);
+app.post('/blogs',validateCampground ,catchAsync(async(req , res , next)=>{
+    // if(!req.body.campground) throw new ExpressError('Invalid blog data' , 400);
     const campground = new Campground(req.body.campground);
     await campground.save();
     res.redirect(`/blogs/${campground._id}`);
@@ -63,7 +78,7 @@ app.get('/blogs/:id/edit', catchAsync(async(req , res)=>{
     res.render('campgrounds/edit', {campground});
 }));
 
-app.put('/blogs/:id',catchAsync(async (req , res)=>{
+app.put('/blogs/:id',validateCampground,catchAsync(async (req , res)=>{
     const {id} = req.params;
     const campground = await Campground.findByIdAndUpdate(id , {...req.body.campground} );
     res.redirect(`/blogs/${campground._id}`);
