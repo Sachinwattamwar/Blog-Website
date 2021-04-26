@@ -1,15 +1,38 @@
 <% layout('layouts/boilerplate') %> 
-    <form action="/blogs" method="POST">
-        <div>
-            <label for="title">Title</label>
-            <input type="text" id="title" name="campground[title]">
-        </div>
-        <div>
-            <label for="location">Location</label>
-            <input type="text" id="location" name="campground[location]">
-        </div>
-        <button>Add campground</button>
-    </form>
-    <a href="/blogs">Back to all blogs</a>
+<div class="row">
+    <h1 class="text-center">New Blog</h1>
+    <div class="col-6 offset-3">
+        <form action="/blogs" method="POST">
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input class="form-control" type="text" id="title" name="campground[title]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="location">Location</label>
+                <input class="form-control" type="text" id="location" name="campground[location]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="image">Image url</label>
+                <input class="form-control" type="text" id="image" name="campground[image]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="category">Category</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="category-label">@</span>
+                    <input type="text" class="form-control" placeholder="Username" id="category" aria-label="category" aria-describedby="category-label" name="campground[category]">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" type="text" id="description" name="campground[description]"></textarea>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-success">Add campground</button>
+            </div>
+        </form>
+        <a href="/blogs">Back to all blogs</a>
+    </div>
+</div>
+    
 
     
