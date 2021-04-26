@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Campground = require('./models/campground');
 const ejsMate = require('ejs-mate');
 const catchAsync = require('./utils/catchAsync');
+const ExpressError = require('./utils/ExpressError');
 const { findById } = require('./models/campground');
 const methodOverride = require('method-override');
 
@@ -42,6 +43,7 @@ app.get('/blogs/new' , (req , res)=>{
 });
 
 app.post('/blogs' , catchAsync(async(req , res , next)=>{
+    if(!req.body.campground) throw new ExpressError('Invalid blog data' , 400);
     const campground = new Campground(req.body.campground);
     await campground.save();
     res.redirect(`/blogs/${campground._id}`);
@@ -73,8 +75,14 @@ app.delete('/blogs/:id', catchAsync(async (req , res)=>{
     res.redirect('/blogs')
 }));
 
+app.all('*',(req , res , next)=>{
+    next(new ExpressError('Page not found',404));
+});
+
 app.use((err , req , res , next)=>{
-    res.send(' you got error');
+    const {statusCode = 500 } = err;
+    if(!err.message) err.message = 'Oh no , something went wrong';
+    res.status(statusCode).render('error' , {err});
 });
 
 app.listen(3000 , ()=>{
