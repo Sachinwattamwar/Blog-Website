@@ -39,12 +39,22 @@ router.post('/',validateCampground ,catchAsync(async(req , res , next)=>{
 router.get('/:id', catchAsync(async(req , res)=>{
     const {id} = req.params;
     const campground = await Campground.findById(id).populate('reviews');
+    if(!campground)
+    {
+        req.flash('error' , 'cannot find the blog');
+        return res.redirect('/blogs');
+    }
     res.render('campgrounds/show', {campground});
 }));
 
 router.get('/:id/edit', catchAsync(async(req , res)=>{
     const {id} = req.params;
     const campground = await Campground.findById(id);
+    if(!campground)
+    {
+        req.flash('error' , 'cannot find the blog');
+        return res.redirect('/blogs');
+    }
     res.render('campgrounds/edit', {campground});
 }));
 
