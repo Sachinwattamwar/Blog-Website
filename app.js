@@ -9,6 +9,7 @@ const {campgroundSchema} = require('./schemas.js');
 const ExpressError = require('./utils/ExpressError');
 const { findById } = require('./models/campground');
 const methodOverride = require('method-override');
+const Review = require('./models/review');
 
 mongoose.connect('mongodb://localhost:27017/blog-website', {
     useNewUrlParser: true,
@@ -89,6 +90,15 @@ app.delete('/blogs/:id', catchAsync(async (req , res)=>{
     await Campground.findByIdAndDelete(id);
     res.redirect('/blogs')
 }));
+
+app.post('/blogs/:id/reviews', catchAsync(async(req , res)=>{
+    const campground = await Campground.findById(req.params.id);
+    const review = new Review(req.body.review);
+    campground.reviews.push(review);
+    review.save();
+    campground.save();
+    res.redirect(`/blogs/${campground._id}`);
+}))
 
 app.all('*',(req , res , next)=>{
     next(new ExpressError('Page not found',404));
