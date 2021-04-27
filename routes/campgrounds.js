@@ -28,9 +28,11 @@ router.get('/new' , (req , res)=>{
 });
 
 router.post('/',validateCampground ,catchAsync(async(req , res , next)=>{
+    
     // if(!req.body.campground) throw new ExpressError('Invalid blog data' , 400);
     const campground = new Campground(req.body.campground);
     await campground.save();
+    req.flash('success' , 'Successfully posted a blog');
     res.redirect(`/blogs/${campground._id}`);
 }))
 
@@ -49,12 +51,14 @@ router.get('/:id/edit', catchAsync(async(req , res)=>{
 router.put('/:id',validateCampground,catchAsync(async (req , res)=>{
     const {id} = req.params;
     const campground = await Campground.findByIdAndUpdate(id , {...req.body.campground} );
+    req.flash('success' , 'Successfully edited the blog');
     res.redirect(`/blogs/${campground._id}`);
 }));
 
 router.delete('/:id', catchAsync(async (req , res)=>{
     const {id} = req.params;
     await Campground.findByIdAndDelete(id);
+    req.flash('success' , 'Successfully deleted a blog');
     res.redirect('/blogs')
 }));
 
