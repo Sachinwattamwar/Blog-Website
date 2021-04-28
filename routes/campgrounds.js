@@ -59,18 +59,32 @@ router.get('/:id/edit', isLoggedIn,catchAsync(async(req , res)=>{
         req.flash('error' , 'cannot find the blog');
         return res.redirect('/blogs');
     }
+    if(!campground.author.equals(req.user._id)){
+        req.flash('error' , 'You do not own the permission to edit this');
+        return res.redirect(`/blogs/${id}`);
+    }
     res.render('campgrounds/edit', {campground});
 }));
 
 router.put('/:id',isLoggedIn ,validateCampground,catchAsync(async (req , res)=>{
     const {id} = req.params;
-    const campground = await Campground.findByIdAndUpdate(id , {...req.body.campground} );
+    const campground = await Campground.findById(id);
+    if(!campground.author.equals(req.user._id)){
+        req.flash('error' , 'You do not own the permission to edit this');
+        return res.redirect(`/blogs/${id}`);
+    }
+    const camp = await Campground.findByIdAndUpdate(id , {...req.body.campground} );
     req.flash('success' , 'Successfully edited the blog');
     res.redirect(`/blogs/${campground._id}`);
 }));
 
 router.delete('/:id', isLoggedIn,catchAsync(async (req , res)=>{
     const {id} = req.params;
+    const campground = await Campground.findById(id);
+    if(!campground.author.equals(req.user._id)){
+        req.flash('error' , 'You do not own the permission to edit this');
+        return res.redirect(`/blogs/${id}`);
+    }
     await Campground.findByIdAndDelete(id);
     req.flash('success' , 'Successfully deleted a blog');
     res.redirect('/blogs')
