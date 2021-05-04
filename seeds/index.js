@@ -30,7 +30,17 @@ const seedDB = async()=>{
             title : `${sample(descriptors)} ${sample(places)}`,
             image : 'https://source.unsplash.com/collection/483251',
             description : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio quod maiores earum, alias facere iste distinctio optio itaque unde. Accusantium debitis vero adipisci soluta consectetur veniam perferendis iste saepe recusandae!',
-            category
+            category,
+            images : [
+                {
+                  url: 'https://res.cloudinary.com/de6h6xpfi/image/upload/v1620142424/BlogWebsite/tx9xvtxy0ncb12zpxrqo.jpg',
+                  filename: 'BlogWebsite/tx9xvtxy0ncb12zpxrqo'
+                },
+                {
+                  url: 'https://res.cloudinary.com/de6h6xpfi/image/upload/v1620142424/BlogWebsite/ynxmtgkfc6v35lp1vcf1.jpg',
+                  filename: 'BlogWebsite/ynxmtgkfc6v35lp1vcf1'
+                }
+              ]   
         })
         await camp.save();
     }
