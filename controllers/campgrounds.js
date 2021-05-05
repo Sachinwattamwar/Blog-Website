@@ -19,12 +19,12 @@ module.exports.createCampground = async(req , res , next)=>{
         query : req.body.campground.location,
         limit : 1
     }).send()
-    // res.send(geoData.body.features[0].geometry);
     const campground = new Campground(req.body.campground);
+    campground.geometry = geoData.body.features[0].geometry;
     campground.images = req.files.map(f=>({url : f.path , filename : f.filename}));
     campground.author = req.user._id;
     await campground.save();
-    //console.log(campground);
+    console.log(campground);
     req.flash('success' , 'Successfully posted a blog');
     res.redirect(`/blogs/${campground._id}`);
 }
