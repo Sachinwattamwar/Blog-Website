@@ -2,6 +2,8 @@ if(process.env.NODE_ENV !== "production"){
     require('dotenv').config();
 }
 
+
+
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -13,14 +15,19 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+//const dbUrl = process.env.DB_URL
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/blog-website'
+
+const MongoStore = require("connect-mongo");
+
 
 
 const userRoutes = require('./routes/users')
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
+// mongodb://localhost:27017/blog-website
 
-
-mongoose.connect('mongodb://localhost:27017/blog-website', {
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex : true , 
     useUnifiedTopology: true,
@@ -42,8 +49,25 @@ app.use(express.urlencoded({extended : true}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const secret = process.env.SECRET || 'thisissecret';
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisissecret'
+    }
+});
+
+store.on("error", function(e){
+    console,log("Store error" , e);
+})
+
+
 const sessionConfig = {
-    secret : 'thisissecret',
+    store,
+    name:'session',
+    secret ,
     resave : false,
     saveUninitialized : true ,
     cookie : {
