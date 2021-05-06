@@ -32,7 +32,7 @@ You can also delete your comments and also update images. Images are displayed i
  ![alt text](https://i.imgur.com/kMq70pu.png)
  
 #### Cluster Map for all blogs
- ![Uploading image.png…]()
+ ![image](https://user-images.githubusercontent.com/43489632/117299661-694e5200-ae96-11eb-8c81-a1d0ecbd451c.png)
  
 #### View Blog
  ![alt text](https://i.imgur.com/LeJOmTg.png)
