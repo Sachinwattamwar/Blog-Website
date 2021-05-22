@@ -51,6 +51,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/Sachinwattamwar"><img src="https://avatars.githubusercontent.com/u/43489632?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sachin Wattamwar</b></sub></a><br /><a href="#design-Sachinwattamwar" title="Blogposts">📝</a></td>
     <td align="center"><a href="https://github.com/sanketnagrale"><img src="https://avatars.githubusercontent.com/u/61420551?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sanketnagrale</b></sub></a><br /><a href="#blog-sanketnagrale" title="Design">🎨</a></td>
+      <td align="center"><a href="https://github.com/AvinashYadav58"><img src="https://avatars.githubusercontent.com/u/61420551?v=4?s=100" width="100px;" alt=""/><br /><sub><b>AvinashYadav58</b></sub></a><br /><a href="#blog-AvinashYadav58" title="Design">🎨</a></td>
   </tr>
 </table>
 
